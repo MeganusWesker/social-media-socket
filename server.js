@@ -9,8 +9,8 @@ config({path:"config.env"});
 
 module.exports.io=new Server(server,{
   cors:{
-      origin:'*',
-      
+      origin:[process.env.FRONTEND_URL],
+      credentials:true,
   }
 });
 
