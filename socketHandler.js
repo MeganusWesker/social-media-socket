@@ -6,16 +6,18 @@ const alreadyJoinedUser=(userId)=>{
     let isJoined=false;
 
     users.forEach((item)=>{
-        if(item.userId==userId){
+        if(item.userId===userId){
             isJoined=true;
         }
-    })
+    });
 
     return isJoined;
 }
 
 const removeUserWhenDisconnects=(socketId)=>{
-   users=users.filter((item)=>item.socketId !==socketId);
+    console.log(`user socket id is ${socketId}`);
+   let newUsers=users.filter((item)=>item.socketId !==socketId);
+   users=newUsers;
 }
 
 module.exports.ioHandler=()=>{
@@ -24,12 +26,12 @@ module.exports.ioHandler=()=>{
 
    
 
-        socket.on('addUser',(userId,socketId)=>{
-            console.log(userId,socketId);
+        socket.on('addUser',(userId)=>{
+            console.log(userId);
             const isJoined=alreadyJoinedUser(userId);
 
             if(!isJoined){
-                users.push({userId,socketId});
+                users.push({userId,socketId:socket.id});
                 console.log(users);
                 console.log('joined successfully');
             }
