@@ -5,14 +5,18 @@ const server=http.createServer(app);
 const {Server} =require('socket.io');
 const {config} =require('dotenv');
 
+
 config({path:"config.env"});
+
 
 module.exports.io=new Server(server,{
   cors:{
-      origin:[process.env.FRONTEND_URL],
-      credentials:true,
-  }
+      origin:'*'
+  },
+  debug: false
 });
+
+
 
 const {ioHandler} =require('./socketHandler');
 ioHandler();
